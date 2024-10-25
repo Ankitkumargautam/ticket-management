@@ -11,3 +11,5 @@
 
 2. Basic server with mongoose
 
+3. Rough layout of Frontend.
+

@@ -1,22 +1,127 @@
-import "./App.css";
-import Button from "@mui/material/Button";
-import useStyles from "./utils/styles";
+import React, { useState } from "react";
+import {
+  Container,
+  Typography,
+  Button,
+  Pagination,
+  Select,
+  MenuItem,
+  IconButton,
+} from "@mui/material";
+import {
+  FirstPage,
+  LastPage,
+  KeyboardDoubleArrowLeft,
+  KeyboardDoubleArrowRight,
+} from "@mui/icons-material";
 
-const App = () => {
-  const classes = useStyles();
+import TripList from "./components/TripList";
+import TripDetailsModal from "./components/TripDetailsModal";
+import TripForm from "./components/TripForm";
+
+function App() {
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [trips, setTrips] = useState([]);
+
+  const [page, setPage] = useState(1); // Current page
+  const [rowsPerPage, setRowsPerPage] = useState(5); // Rows per page
+  const [openForm, setOpenForm] = useState(false); // Form modal state
+
+  const handleOpenForm = () => setOpenForm(true);
+  const handleCloseForm = () => setOpenForm(false);
+
+  const handleOpenModal = (trip) => {
+    setSelectedTrip(trip);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setSelectedTrip(null);
+  };
+
+  const handleSubmitTrip = (newTrip) => {
+    setTrips([...trips, newTrip]);
+    handleCloseForm();
+  };
+
+  const handlePageChange = (event, value) => setPage(value);
+
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(event.target.value);
+    setPage(1); // Reset to first page whenever rows per page is changed
+  };
+
   return (
-    <div className="App_Base">
-      <h2 className="crimson-text-regular">
-        Hello ther TRRE is good lokking theire aldbl gabbage.
-      </h2>
-      <p className={classes.error}>
-        Hello ther TRRE is good lokking theire aldbl gabbage.dd
-      </p>
-      <div>
-        <Button variant="contained">Hello world</Button>
+    <Container>
+      <Typography variant="h4" sx={{ my: 4, textAlign: "center" }}>
+        Trip Pass Management
+      </Typography>
+
+      {/* Button to open the TripForm modal */}
+      <Button variant="contained" onClick={handleOpenForm} sx={{ mb: 4 }}>
+        Add Trip
+      </Button>
+
+      <TripForm
+        open={openForm}
+        onClose={handleCloseForm}
+        onSubmit={handleSubmitTrip}
+      />
+
+      <TripList trips={trips} onTripClick={handleOpenModal} page={page} />
+
+      {/* Pagination Controls */}
+
+      {/* Rows per Page Selector */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "20px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "10px",
+          }}
+        >
+          <Typography variant="body2" sx={{ mr: 2 }}>
+            Rows per page:
+          </Typography>
+          <Select value={rowsPerPage} onChange={handleRowsPerPageChange}>
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={15}>15</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+          </Select>
+        </div>
+
+        {/* Pagination */}
+        <Pagination
+          count={Math.ceil(trips.length / rowsPerPage)}
+          page={page}
+          onChange={handlePageChange}
+          siblingCount={1}
+          boundaryCount={1}
+          showFirstButton
+          showLastButton
+          sx={{ mx: 2 }}
+        />
       </div>
-    </div>
+
+      <TripDetailsModal
+        open={openModal}
+        onClose={handleCloseModal}
+        trip={selectedTrip}
+      />
+    </Container>
   );
-};
+}
 
 export default App;
