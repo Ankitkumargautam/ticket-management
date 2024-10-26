@@ -14,3 +14,5 @@
 3. Rough layout of Frontend.
 
 4. Make perfect frontend.
+
+5. Formik implementation and form complete for trip making.
