@@ -15,6 +15,7 @@ import * as Yup from "yup";
 const TripForm = ({ open, onClose }) => {
   // Default values for the form
   const defaultValues = {
+    routeName: "",
     originDepot: "",
     destinationDepot: "",
     targetIncome: "",
@@ -67,6 +68,7 @@ const TripForm = ({ open, onClose }) => {
   const formik = useFormik({
     initialValues: loadData(),
     validationSchema: Yup.object({
+      routeName: Yup.string().required("Route Name is requrired"),
       originDepot: Yup.string().required("Origin Depot is required"),
       destinationDepot: Yup.string().required("Destination Depot is required"),
       targetIncome: Yup.number()
@@ -124,6 +126,20 @@ const TripForm = ({ open, onClose }) => {
         </Typography>
         <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Route Name"
+                name="routeName"
+                value={formik.values.routeName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.routeName && Boolean(formik.errors.routeName)
+                }
+                helperText={formik.touched.routeName && formik.errors.routeName}
+                fullWidth
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 label="Origin Depot"

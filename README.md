@@ -16,3 +16,5 @@
 4. Make perfect frontend.
 
 5. Formik implementation and form complete for trip making.
+
+6. backend implementation for creating the trip
