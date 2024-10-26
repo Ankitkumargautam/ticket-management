@@ -16,7 +16,7 @@ import {
 } from "@mui/icons-material";
 
 import TripList from "./components/TripList";
-import TripDetailsModal from "./components/TripDetailsModal";
+import TripDetailsModal from "./components/TripDetailsModal/TripDetailsModal";
 import TripForm from "./components/TripForm";
 
 function App() {
