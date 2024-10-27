@@ -191,14 +191,18 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
             {/* here we need to apply check for first Element if it is "" then send "N/A" */}
             <TwoElementBoxWhite
               firstElement={
-                trip?.actualIncome !== "" ? "₹ " + trip?.actualIncome : "N/A"
+                trip?.actualInTime !== "" ? trip?.actualInTime : "N/A"
               }
               secondElement="Actual in Time"
             />
 
             <TwoElementBoxWhite
               firstElement={
-                trip?.actualInTime !== "" ? trip?.actualInTime : "N/A"
+                trip.actualIncome === null
+                  ? "N/A"
+                  : trip?.actualIncome !== ""
+                  ? "₹ " + trip?.actualIncome
+                  : "N/A"
               }
               secondElement="Actual Income"
             />

@@ -76,10 +76,8 @@ const TripForm = ({ open, onClose }) => {
       targetIncome: Yup.number()
         .required("Target Income is required")
         .positive(),
-      actualInTime: Yup.string().required("Actual In Time is required"),
-      actualIncome: Yup.number()
-        .required("Actual Income is required")
-        .positive(),
+      actualInTime: Yup.string(),
+      actualIncome: Yup.number(),
       departure: Yup.string().required("Departure is required"),
       arrival: Yup.string().required("Arrival is required"),
       travelDate: Yup.date().required("Travel Date is required"),
@@ -94,7 +92,10 @@ const TripForm = ({ open, onClose }) => {
           name: Yup.string().required("Driver Name is required"),
           Id: Yup.string().required("Driver ID is required"),
           licenseNo: Yup.string().required("Driver License No is required"),
-          contact: Yup.string().required("Driver Contact is required"),
+          contact: Yup.string()
+            .matches(/^[0-9]+$/, "contact must contain digits")
+            .length(10, "contact must be exactly 10 character")
+            .required("Driver Contact is required"),
         })
       ),
       conductors: Yup.array().of(
@@ -102,7 +103,10 @@ const TripForm = ({ open, onClose }) => {
           name: Yup.string().required("Conductor Name is required"),
           Id: Yup.string().required("Conductor ID is required"),
           licenseNo: Yup.string().required("Conductor License No is required"),
-          contact: Yup.string().required("Conductor Contact is required"),
+          contact: Yup.string()
+            .matches(/^[0-9]+$/, "contact must contain digits")
+            .length(10, "contact must be exactly 10 character")
+            .required("Driver Contact is required"),
         })
       ),
     }),
@@ -458,6 +462,13 @@ const TripForm = ({ open, onClose }) => {
                         formik.touched.drivers?.[index]?.contact &&
                         formik.errors.drivers?.[index]?.contact
                       }
+                      maxLength={10}
+                      onKeyPress={(e) => {
+                        const isValidKey = /^\d$/.test(e.key);
+                        if (!isValidKey) {
+                          e.preventDefault();
+                        }
+                      }}
                       fullWidth
                     />
                   </Grid>

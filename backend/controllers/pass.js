@@ -57,6 +57,7 @@ export const listPass = async (req, res) => {
       {
         $unwind: { path: "$passes", preserveNullAndEmptyArrays: true },
       },
+      { $sort: { createdAt: -1 } },
     ];
 
     const pagination = [{ $skip: skip }, { $limit: limit }];

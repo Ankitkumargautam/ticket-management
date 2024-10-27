@@ -10,7 +10,8 @@ const driverSchema = new mongoose.Schema({
   dress: { type: Boolean, default: false },
   image: {
     type: String,
-    default: "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75",
+    default:
+      "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75",
   },
 });
 
@@ -24,7 +25,8 @@ const conductorSchema = new mongoose.Schema({
   dress: { type: Boolean, default: false },
   image: {
     type: String,
-    default: "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75",
+    default:
+      "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75",
   },
 });
 
@@ -34,8 +36,8 @@ const passSchema = new mongoose.Schema(
     originDepot: { type: String, required: true },
     destinationDepot: { type: String, required: true },
     targetIncome: { type: Number, required: true },
-    actualInTime: { type: String, required: true },
-    actualIncome: { type: Number, required: true },
+    actualInTime: { type: String },
+    actualIncome: { type: Number },
     departure: { type: String, required: true },
     arrival: { type: String, required: true },
     travelDate: { type: String, required: true },

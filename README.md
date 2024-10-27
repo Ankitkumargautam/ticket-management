@@ -20,3 +20,5 @@
 6. backend implementation for creating the trip , list trip and detail trip done
 
 7. contact validation and min 1 driver and min 1 conductor fix
+
+8. Modal component finished

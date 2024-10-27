@@ -16,6 +16,7 @@ const driverSchema = Joi.object({
   mask: Joi.boolean().default(true).label("Mask"),
   dress: Joi.boolean().default(false).label("Dress"),
   image: Joi.string()
+    .allow("")
     .uri()
     .default(
       "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75"
@@ -32,6 +33,7 @@ const conductorSchema = Joi.object({
   mask: Joi.boolean().default(true).label("Mask"),
   dress: Joi.boolean().default(false).label("Dress"),
   image: Joi.string()
+    .allow("")
     .uri()
     .default(
       "https://next-amazonin.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdhnnj0xby%2Fimage%2Fupload%2Fv1705675940%2Ff003ojbofb31dinuc5hz.jpg&w=640&q=75"
@@ -44,8 +46,8 @@ const passSchema = Joi.object({
   originDepot: Joi.string().required().label("Origin Depot"),
   destinationDepot: Joi.string().required().label("Destination Depot"),
   targetIncome: Joi.number().required().label("Target Income"),
-  actualInTime: Joi.string().required().label("Actual In-Time"),
-  actualIncome: Joi.number().required().label("Actual Income"),
+  actualInTime: Joi.string().allow(""),
+  actualIncome: Joi.number().allow(""),
   departure: Joi.string().required().label("Departure"),
   arrival: Joi.string().required().label("Arrival"),
   travelDate: Joi.string().isoDate().required().label("Travel Date"),
