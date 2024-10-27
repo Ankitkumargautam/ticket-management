@@ -14,7 +14,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const TripForm = ({ open, onClose }) => {
+const TripForm = ({ open, onClose, getData }) => {
   // Default values for the form
   const defaultValues = {
     routeName: "",
@@ -111,22 +111,19 @@ const TripForm = ({ open, onClose }) => {
       ),
     }),
     onSubmit: async (values) => {
-      console.log("first");
-      console.log("Form Submitted", values);
-
-      //call api
       try {
         const { data } = await axios.post(
           `${process.env.REACT_APP_BASEURL}/api/createPass`,
           values
         );
-        console.log("data === ", data?.data);
+        getData();
+
         toast(data.message);
       } catch (error) {
         toast(error?.response?.data?.message || "Internal error");
       }
       // Save data to localStorage
-      localStorage.setItem("tripFormData", JSON.stringify(values));
+      localStorage.setItem("tripFormData", JSON.stringify(defaultValues));
       onClose();
     },
   });

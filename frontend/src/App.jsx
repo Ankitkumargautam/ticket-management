@@ -47,15 +47,12 @@ function App() {
       );
       setTrips(data?.data);
       setTripsCount(data?.total);
-      // console.log("trips === ", trips);
     } catch (error) {
       toast.error(
         error?.response?.data?.message || "Failed to fetch employee data"
       );
     }
   };
-
-  console.log("trips ---- ", trips);
 
   const handleOpenModal = (trip) => {
     setSelectedTrip(trip);
@@ -75,10 +72,9 @@ function App() {
   const handlePageChange = (event, value) => setPage(value);
 
   const handleRowsPerPageChange = (event) => {
-    console.log("event.target.value : ", event.target.value);
     setRowsPerPage(event.target.value);
     setPage(1); // Reset to first page whenever rows per page is changed
-    getData()
+    getData();
   };
 
   return (
@@ -99,6 +95,8 @@ function App() {
         open={openForm}
         onClose={handleCloseForm}
         onSubmit={handleSubmitTrip}
+        getData={getData}
+        // setTrips={setTrips}
       />
 
       <TripList trips={trips} onTripClick={handleOpenModal} page={page} />

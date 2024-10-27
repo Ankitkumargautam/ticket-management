@@ -10,6 +10,12 @@ import {
 import Moment from "react-moment";
 
 const TripList = ({ trips, onTripClick, page }) => {
+  if (trips.length === 0)
+    return (
+      <div>
+        <Typography variant="h5" textAlign="center">No trip is available. Please add some trip</Typography>
+      </div>
+    );
   return (
     <List>
       {trips.map((trip, index) => (

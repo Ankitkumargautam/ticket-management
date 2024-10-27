@@ -16,14 +16,12 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery("(max-width:900px)");
 
-  // console.log("trip---- ", trip);
-
   // Conditional rendering for null trip data, after hook calls
   if (!trip) return null;
 
   const renderArrivalCityCode = (cityName) => {
     const arrivalCity = city.find((c) => c.name === cityName);
-    return arrivalCity ? arrivalCity.code : cityName.slice(0, 3); // handle if not found
+    return arrivalCity ? arrivalCity.code : cityName.slice(0, 3);
   };
 
   return (

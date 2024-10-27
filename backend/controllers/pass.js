@@ -6,11 +6,8 @@ export const createPass = async (req, res) => {
     const payload = req.body;
 
     const createPass = await Pass.create(payload);
-    // console.log("createPass: ", createPass);
 
     const createListPass = await ListPass.create({ pass: createPass._id });
-
-    // console.log("createListPass: ", createListPass);
 
     if (createPass && createListPass) {
       return res.status(200).json({
