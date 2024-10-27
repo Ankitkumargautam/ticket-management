@@ -22,3 +22,5 @@
 7. contact validation and min 1 driver and min 1 conductor fix
 
 8. Modal component finished
+
+9. Frontend pagination functionality implemented

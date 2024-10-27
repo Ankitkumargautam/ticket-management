@@ -10,15 +10,9 @@ import {
 import Moment from "react-moment";
 
 const TripList = ({ trips, onTripClick, page }) => {
-  const itemsPerPage = 5;
-  const displayedTrips = trips.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
-
   return (
     <List>
-      {displayedTrips.map((trip, index) => (
+      {trips.map((trip, index) => (
         <ListItem key={index}>
           <Card sx={{ width: "100%" }}>
             <CardContent>
@@ -26,7 +20,10 @@ const TripList = ({ trips, onTripClick, page }) => {
                 {trip?.passes?.departure} to {trip?.passes?.arrival} -{" "}
                 <Moment format="DD MMM YYYY">{trip?.passes?.travelDate}</Moment>
               </Typography>
-              <Button variant="outlined" onClick={() => onTripClick(trip?.passes)}>
+              <Button
+                variant="outlined"
+                onClick={() => onTripClick(trip?.passes)}
+              >
                 View Details
               </Button>
             </CardContent>

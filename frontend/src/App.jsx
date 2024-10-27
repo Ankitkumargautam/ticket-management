@@ -30,6 +30,7 @@ function App() {
   const [page, setPage] = useState(1); // Current page
   const [rowsPerPage, setRowsPerPage] = useState(5); // Rows per page
   const [openForm, setOpenForm] = useState(false); // Form modal state
+  const [tripsCount, setTripsCount] = useState(0);
 
   const handleOpenForm = () => setOpenForm(true);
   const handleCloseForm = () => setOpenForm(false);
@@ -37,7 +38,7 @@ function App() {
   useEffect(() => {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page, rowsPerPage]);
 
   const getData = async () => {
     try {
@@ -45,13 +46,16 @@ function App() {
         `${process.env.REACT_APP_BASEURL}/api/listPass?page=${page}&limit=${rowsPerPage}`
       );
       setTrips(data?.data);
-      console.log("trips === ", trips)
+      setTripsCount(data?.total);
+      // console.log("trips === ", trips);
     } catch (error) {
       toast.error(
         error?.response?.data?.message || "Failed to fetch employee data"
       );
     }
   };
+
+  console.log("trips ---- ", trips);
 
   const handleOpenModal = (trip) => {
     setSelectedTrip(trip);
@@ -71,8 +75,10 @@ function App() {
   const handlePageChange = (event, value) => setPage(value);
 
   const handleRowsPerPageChange = (event) => {
+    console.log("event.target.value : ", event.target.value);
     setRowsPerPage(event.target.value);
     setPage(1); // Reset to first page whenever rows per page is changed
+    getData()
   };
 
   return (
@@ -129,7 +135,7 @@ function App() {
 
         {/* Pagination */}
         <Pagination
-          count={Math.ceil(trips.length / rowsPerPage)}
+          count={Math.ceil(tripsCount / rowsPerPage)}
           page={page}
           onChange={handlePageChange}
           siblingCount={1}

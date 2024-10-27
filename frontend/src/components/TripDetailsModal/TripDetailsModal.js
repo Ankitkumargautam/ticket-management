@@ -16,7 +16,7 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery("(max-width:900px)");
 
-  console.log("trip---- ", trip);
+  // console.log("trip---- ", trip);
 
   // Conditional rendering for null trip data, after hook calls
   if (!trip) return null;
