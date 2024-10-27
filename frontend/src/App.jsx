@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -18,6 +18,9 @@ import {
 import TripList from "./components/TripList";
 import TripDetailsModal from "./components/TripDetailsModal/TripDetailsModal";
 import TripForm from "./components/TripForm";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function App() {
   const [selectedTrip, setSelectedTrip] = useState(null);
@@ -30,6 +33,25 @@ function App() {
 
   const handleOpenForm = () => setOpenForm(true);
   const handleCloseForm = () => setOpenForm(false);
+
+  useEffect(() => {
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getData = async () => {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BASEURL}/api/listPass?page=${page}&limit=${rowsPerPage}`
+      );
+      setTrips(data?.data);
+      console.log("trips === ", trips)
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || "Failed to fetch employee data"
+      );
+    }
+  };
 
   const handleOpenModal = (trip) => {
     setSelectedTrip(trip);
@@ -55,6 +77,9 @@ function App() {
 
   return (
     <Container>
+      {/* For toast */}
+      <ToastContainer />
+
       <Typography variant="h4" sx={{ my: 4, textAlign: "center" }}>
         Trip Pass Management
       </Typography>

@@ -8,14 +8,23 @@ import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import TwoElementBox from "../commons/TwoElementBox";
 import ThirdRowBox from "../commons/ThirdRowBox";
 import TwoElementBoxWhite from "../commons/TwoElementBoxWhite";
+import city from "../../utils/cityCode";
+import Moment from "react-moment";
 
 const TripDetailsModal = ({ open, onClose, trip }) => {
   // Media queries for responsiveness
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isMediumScreen = useMediaQuery("(max-width:900px)");
 
+  console.log("trip---- ", trip);
+
   // Conditional rendering for null trip data, after hook calls
   if (!trip) return null;
+
+  const renderArrivalCityCode = (cityName) => {
+    const arrivalCity = city.find((c) => c.name === cityName);
+    return arrivalCity ? arrivalCity.code : cityName.slice(0, 3); // handle if not found
+  };
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -46,7 +55,7 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
                     isMediumScreen
                   )}
                 >
-                  LKO
+                  {renderArrivalCityCode(trip?.departure).toUpperCase()}
                 </Typography>
 
                 <Typography
@@ -56,7 +65,7 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
                     isMediumScreen
                   )}
                 >
-                  {"Lucknow".toUpperCase()}
+                  {trip?.departure.toUpperCase()}
                 </Typography>
               </Box>
 
@@ -75,7 +84,7 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
                     isMediumScreen
                   )}
                 >
-                  GKP
+                  {renderArrivalCityCode(trip?.arrival).toUpperCase()}
                 </Typography>
 
                 <Typography
@@ -85,36 +94,58 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
                     isMediumScreen
                   )}
                 >
-                  {"Gorakhpur".toUpperCase()}
+                  {trip?.arrival.toUpperCase()}
                 </Typography>
               </Box>
             </Box>
           </Box>
           {/* second row box */}
           <Box sx={styles.secondRowBox}>
-            <TwoElementBox firstElement="495812" secondElement="Duty Slip No" />
+            <TwoElementBox
+              firstElement={trip?.dutySlipNo !== "" ? trip?.dutySlipNo : "N/A"}
+              secondElement="Duty Slip No"
+            />
 
             <TwoElementBox
-              firstElement="UP32MN9181"
+              firstElement={trip?.busNumber !== "" ? trip?.busNumber : "N/A"}
               secondElement="Bus Number"
             />
 
             <TwoElementBox
-              firstElement="80 LITER"
+              firstElement={
+                trip?.issueDiesel !== "" ? trip?.issueDiesel + " LITER" : "N/A"
+              }
               secondElement="Issue Diesel"
             />
 
-            <TwoElementBox firstElement="15:15" secondElement="SCH Out Time" />
-            <TwoElementBox firstElement="02" secondElement="SCH Trip" />
-
-            <TwoElementBox firstElement="360 KM" secondElement="SCH KM" />
             <TwoElementBox
-              firstElement={"Gorakhpur".toUpperCase()}
+              firstElement={trip?.schOutTime !== "" ? trip?.schOutTime : "N/A"}
+              secondElement="SCH Out Time"
+            />
+            <TwoElementBox
+              firstElement={trip?.schTrip !== "" ? trip?.schTrip : "N/A"}
+              secondElement="SCH Trip"
+            />
+
+            <TwoElementBox
+              firstElement={trip?.schKm !== "" ? trip?.schKm + " KM" : "N/A"}
+              secondElement="SCH KM"
+            />
+            <TwoElementBox
+              firstElement={
+                trip?.originDepot !== ""
+                  ? trip?.originDepot.toUpperCase()
+                  : "N/A"
+              }
               secondElement="Depot"
             />
 
             <TwoElementBox
-              firstElement={"Gorakhpur".toUpperCase()}
+              firstElement={
+                trip?.destinationDepot !== ""
+                  ? trip?.destinationDepot.toUpperCase()
+                  : "N/A"
+              }
               secondElement="Region"
             />
           </Box>
@@ -128,7 +159,9 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
           <Box sx={styles.forthRowBox}>
             <Box>
               <Typography variant="p" sx={styles.forthRowBoxText}>
-                DATE & TIME: 14 Oct 2024 | 14:32
+                DATE & TIME:{" "}
+                <Moment format="DD MMM YYYY">{trip?.travelDate}</Moment> |{" "}
+                {trip?.actualInTime}
               </Typography>
             </Box>
             <Box>
@@ -140,22 +173,30 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
           {/* fifth row box */}
           <Box sx={styles.fifthRowBox}>
             <TwoElementBoxWhite
-              firstElement="GORAKHPUR TO VIKAS NAGAR VIA AYODHYA DHAM"
+              firstElement={
+                trip?.routeName !== "" ? trip?.routeName.toUpperCase() : "N/A"
+              }
               secondElement="ROUTE NAME"
             />
 
             <TwoElementBoxWhite
-              firstElement="₹ 12000/-"
+              firstElement={
+                trip?.targetIncome !== "" ? "₹ " + trip?.targetIncome : "N/A"
+              }
               secondElement="Target Income"
             />
             {/* here we need to apply check for first Element if it is "" then send "N/A" */}
             <TwoElementBoxWhite
-              firstElement="N/A"
+              firstElement={
+                trip?.actualIncome !== "" ? "₹ " + trip?.actualIncome : "N/A"
+              }
               secondElement="Actual in Time"
             />
 
             <TwoElementBoxWhite
-              firstElement="N/A"
+              firstElement={
+                trip?.actualInTime !== "" ? trip?.actualInTime : "N/A"
+              }
               secondElement="Actual Income"
             />
 

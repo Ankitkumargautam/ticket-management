@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TripForm = ({ open, onClose }) => {
   // Default values for the form
@@ -104,9 +106,21 @@ const TripForm = ({ open, onClose }) => {
         })
       ),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("first");
       console.log("Form Submitted", values);
+
+      //call api
+      try {
+        const { data } = await axios.post(
+          `${process.env.REACT_APP_BASEURL}/api/createPass`,
+          values
+        );
+        console.log("data === ", data?.data);
+        toast(data.message);
+      } catch (error) {
+        toast(error?.response?.data?.message || "Internal error");
+      }
       // Save data to localStorage
       localStorage.setItem("tripFormData", JSON.stringify(values));
       onClose();
