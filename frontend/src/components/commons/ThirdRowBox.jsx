@@ -2,10 +2,10 @@ import styles from "../TripDetailsModal/TripDetailsModalStyles";
 import { Box, Typography } from "@mui/material";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import DriverImg from "../../assets/AnkitKumarGautam.jpg";
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
 
-const ThirdRowBox = ({ index }) => {
+const ThirdRowBox = ({ driver, index, isDriver }) => {
   return (
     <Box key={index} sx={styles.cardBox}>
       {/* First row: Image and Information */}
@@ -13,25 +13,25 @@ const ThirdRowBox = ({ index }) => {
         <Box sx={styles.cardImageBox}>
           <img
             src={DriverImg}
-            alt={`Driver ${index}`}
+            alt={`Driver ${index + 1}`}
             style={styles.cardImageStyle}
           />
         </Box>
         <Box sx={styles.cardInfoBox}>
           <Typography sx={styles.cardInfoBoxTextHeading} variant="p">
-            Driver {index}
+            {isDriver === true ? "Driver " : "Conductor "} {index + 1}
           </Typography>
           <Typography sx={styles.cardInfoBoxText} variant="p">
-            Name: Sujeet Yadav
+            Name: {driver?.name}
           </Typography>
           <Typography sx={styles.cardInfoBoxText} variant="p">
-            ID: EMP#003519
+            ID: {driver?.Id}
           </Typography>
           <Typography sx={styles.cardInfoBoxText} variant="p">
-            Licence No.: 123431232
+            Licence No.: {driver?.licenseNo}
           </Typography>
           <Typography sx={styles.cardInfoBoxText} variant="p">
-            Mobile No.: 9192939495
+            Mobile No.: {driver?.contact}
           </Typography>
         </Box>
       </Box>
@@ -40,15 +40,29 @@ const ThirdRowBox = ({ index }) => {
       <Box sx={styles.cardSecondRow}>
         <Box sx={styles.checkItem}>
           <Typography variant="body2">Alcohol</Typography>
-          <ClearIcon sx={styles.crossIcon} /> {/* Use Cross Icon */}
+          {driver?.alcohol === true ? (
+            <CheckIcon sx={styles.checkIcon} />
+          ) : (
+            <ClearIcon sx={styles.crossIcon} />
+          )}
         </Box>
         <Box sx={styles.checkItem}>
           <Typography variant="body2">Mask</Typography>
-          <CheckIcon sx={styles.checkIcon} /> {/* Use Check Icon */}
+          {driver?.mask === true ? (
+            <CheckIcon sx={styles.checkIcon} />
+          ) : (
+            <ClearIcon sx={styles.crossIcon} />
+          )}{" "}
+          {/* Use Check Icon */}
         </Box>
         <Box sx={styles.checkItem}>
           <Typography variant="body2">Dress</Typography>
-          <CheckIcon sx={styles.checkIcon} /> {/* Use Check Icon */}
+          {driver?.dress === true ? (
+            <CheckIcon sx={styles.checkIcon} />
+          ) : (
+            <ClearIcon sx={styles.crossIcon} />
+          )}{" "}
+          {/* Use Check Icon */}
         </Box>
       </Box>
     </Box>

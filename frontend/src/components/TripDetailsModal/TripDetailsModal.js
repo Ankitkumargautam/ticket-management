@@ -151,8 +151,11 @@ const TripDetailsModal = ({ open, onClose, trip }) => {
           </Box>
           {/* Third row box */}
           <Box sx={styles.thirdRowBox}>
-            {[1, 2, 3].map((index) => (
-              <ThirdRowBox index={index} />
+            {trip?.drivers.map((driver, index) => (
+              <ThirdRowBox index={index} driver={driver} isDriver={true} />
+            ))}
+            {trip?.conductors.map((driver, index) => (
+              <ThirdRowBox index={index} driver={driver} />
             ))}
           </Box>
           {/* Forth row box */}
