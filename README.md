@@ -17,4 +17,4 @@
 
 5. Formik implementation and form complete for trip making.
 
-6. backend implementation for creating the trip
+6. backend implementation for creating the trip , list trip and detail trip done
